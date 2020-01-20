@@ -32,6 +32,7 @@ router.post('/register', async (req, res) => {
     if (emailExist) return res.status(400).send('email already exists')
 
 
+
     // hash the password
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
@@ -46,7 +47,7 @@ router.post('/register', async (req, res) => {
 
     try {
         const savedUser = await user.save();
-        res.send({ user: user._id })
+        res.redirect('/login')
 
     } catch (err) {
         res.staus(400).send(err)
@@ -63,7 +64,7 @@ router.post('/login', async (req, res) => {
     ///checking if email exist
     const user = await User.findOne({ email: req.body.email })
     if (!user) return res.status(400).send('email is not found')
-    //password isw correct
+    //password is correct
     const validPass = await bcrypt.compare(req.body.password, user.password)
     if (!validPass) return res.status(400).send('invalid password')
 
@@ -71,8 +72,17 @@ router.post('/login', async (req, res) => {
     //create and asighn a token
 
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
-    res.header('auth-token', token).send(token)
-    res.send('logged in')
+    res.header('auth-token', token)
 
 })
-module.exports = router;
+
+
+//log out
+
+router.delete('/logout', async (req, res) => {
+    const token = jwt.sign({ _id: null }, process.env.TOKEN_SECRET)
+    res.header('auth-token', token)
+    res.redirect('/login')
+
+})
+module.exports = router

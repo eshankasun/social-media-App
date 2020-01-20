@@ -1,13 +1,34 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express();
+const methodOverride = require('method-override')
+const flash = require("express-flash");
+const session = require("express-session");
+const User = require('./model/User')
+
+
+
+
 
 const dotenv = require('dotenv')
 const PORT = process.env.PORT || 3000
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
-//get login page
+app.use(methodOverride('_method'))
+app.use(express.static('public'))
+app.use(flash());
+app.use(
+    session({
+        secret: "anything",
+        resave: false,
+        saveUninitialized: false
+    })
+);
+
+
+
+//get home page
 
 app.get('/', (req, res) => {
     res.render('index.ejs', { name: 'kyle' })
@@ -28,6 +49,8 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
 
 })
+
+
 // import Routes
 const authRoute = require('./auth')
 const postRoute = require('./routes/post')
@@ -41,11 +64,24 @@ mongoose.connect(process.env.DB_CONNECT,
 //Middleware
 app.use(express.json());
 
+app.get('/', function (req, res) {
+    req.flash('info', 'Welcome');
+    res.render('index', {
+        title: 'Home'
+    })
+});
+app.get('/addFlash', function (req, res) {
+    req.flash('info', 'Flash Message Added');
+    res.redirect('/');
+});
+
 
 //route Middlewares
 app.use('/api/user', authRoute)
 
 app.use('/api/post', postRoute)
+
+
 
 
 
