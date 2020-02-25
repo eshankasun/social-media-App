@@ -1,4 +1,12 @@
-<h1>Hi <%=name %></h1>
+<h1>Hi <%=authorizedData.name %></h1>
+<!-- <p>your email address is <%=user.email %></p>
+<p>your ID is <%=user.id %></p>
+<p>your ID is <%=user.name %></p>
+<p>your have <%=message %></p> -->
+<p>your ID is <%=authorizedData.id %></p>
+<p>your Email is <%=authorizedData.email %></p>
+
+
 <form action="/api/user/logout?_method=DELETE" method="POST">
   <button type="submit">Log Out</button>
 </form>

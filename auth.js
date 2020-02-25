@@ -1,8 +1,17 @@
 const router = require('express').Router()
 const User = require('./model/User')
 const { registerValidation, loginValidation } = require('./validation')
+const verifyToken = require('./verifyToken')
+const generateToken = require('./generateToken')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const JWT = require('jsonwebtoken')
+const dotenv = require('dotenv')
+
+dotenv.config();
+
+
+
+
 //VALIDATION
 const Joi = require('@hapi/joi')
 
@@ -56,7 +65,7 @@ router.post('/register', async (req, res) => {
 
 //Log in
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, ) => {
     // lets validate data
     const { error } = loginValidation(req.body)
     if (error) return res.status(400).send(error.details[0].message)
@@ -71,18 +80,50 @@ router.post('/login', async (req, res) => {
 
     //create and asighn a token
 
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
-    res.header('auth-token', token)
+    // const token = JWT.sign({ _id: user._id }, process.env.TOKEN_SECRET)
+    // res.header('auth-token', token)
+    generateToken(res, user.id, user.name, user.email)
+    console.log(user.name, user.id)
+
+
+
+    //redirect to home page
+    res.redirect('/')
 
 })
+
+//authenticate token
+
+
+
+//  authenticateToken(req, res, next) {
+//     const authHeader = req.headers['authorization']
+//     const token = authHeader && authHeader.split(' ')[1]
+//     if (token == null) return res.sendStatus(401)
+
+//     JWT.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+//         if (err) return res.sendStatus(403)
+//         req.usefunctionr = user
+//         next()
+
+//     })
+
+
+
+
 
 
 //log out
 
 router.delete('/logout', async (req, res) => {
-    const token = jwt.sign({ _id: null }, process.env.TOKEN_SECRET)
-    res.header('auth-token', token)
+
+    verifyToken(res, null)
+
+
+
+
     res.redirect('/login')
 
 })
+
 module.exports = router
