@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
-import { deleteEducation, deleteExperience } from '../../actions/profile';
+import { deleteEducation } from '../../actions/profile';
 const Education = ({ education, deleteEducation }) => {
   const educations = education.map(edu => (
     <tr key={edu._id}>
@@ -13,7 +13,7 @@ const Education = ({ education, deleteEducation }) => {
 
       <td>
         <Moment format='YYYY/MM/DD '>{edu.from}</Moment>-{' '}
-        {edu.to === '' ? (
+        {edu.to === null ? (
           ' now '
         ) : (
           <Moment format=' YYYY/MM/DD'>{edu.to}</Moment>
