@@ -5,15 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
+      "type": "chrome",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch Chrome from file system",
       "skipFiles": [
         "<node_internals>/**",
         "node_modules/**",
         "${workspaceRoot}/node_modules/*/.js"
       ],
-      "program": "${workspaceFolder}\\index.js"
+      "file": "${workspaceFolder}",
+    
     }
   ]
 }

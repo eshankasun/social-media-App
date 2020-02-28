@@ -24,4 +24,14 @@ export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 
 //POST
 export const GET_POSTS = 'GET_POSTS';
+export const GET_POST = 'GET_POST';
 export const POST_ERROR = 'POST_ERROR';
+export const DELETE_POST = 'DELETE_POST';
+export const ADD_POST = 'ADD_POST';
+//Likes
+export const UPDATE_LIKES = 'UPDATE_LIKES';
+
+// COMMENTS
+
+export const ADD_COMMMENT = 'ADD_COMMMENT';
+export const REMOVE_COMMMENT = 'REMOVE_COMMMENT';
