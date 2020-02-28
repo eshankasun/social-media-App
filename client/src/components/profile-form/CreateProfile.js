@@ -1,4 +1,3 @@
-/** @format */
 
 import React, { useState, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';

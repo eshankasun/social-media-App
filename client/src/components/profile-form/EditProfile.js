@@ -181,14 +181,15 @@ const EditProfile = ({
 
         {displaySocialInputs && (
           <Fragment>
-            <div className='form-group social-input'>
+ 
+           <div className='form-group social-input'>
               <i className='fab fa-twitter fa-2x'></i>
               <input
                 type='text'
                 placeholder='Twitter URL'
                 name='twitter'
                 value={twitter}
-                onchange={e => onChange(e)}
+                onChange={e => onChange(e)}
               />
             </div>
 

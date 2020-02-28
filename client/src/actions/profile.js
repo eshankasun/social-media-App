@@ -79,7 +79,7 @@ export const getProfileById = userId => async dispatch => {
 export const getGithubRepos = username => async dispatch => {
 
   try {
-    const res = await axios.get(`/api/profile/github${username}`);
+    const res = await axios.get(`/api/profile/github/${username}`);
     dispatch({
       type: GET_REPOS,
       payload: res.data
@@ -220,7 +220,7 @@ export const deleteExperience = id => async dispatch => {
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
-  console.log(id)
+
 };
 
 // Delete Education
